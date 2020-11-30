@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category index{% endblock %}
+{% block pageheader %}
+    <h1 style="color: white;">Category index</h1>
+{% endblock %}
+
+{% block body %}
+    {% for category in categories  %}
+    <div class="portlet form">
+    <h1>{{ category.name }} products:</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            {% if product.category.id == category.id %}
+
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+
+                <td>
+                    <a href="{{ path('category_show', {'id': product.id}) }}">show</a>
+                    <a href="{{ path('category_edit', {'id': product.id}) }}">edit</a>
+                </td>
+            </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('category_new') }}">Create new</a>
+    </div>
+        {% endfor %}
+{% endblock %}

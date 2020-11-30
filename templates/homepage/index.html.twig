@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomepageController!{% endblock %}
+{% block pageheader %}
+    <h1 style="color: white;">Homepage</h1>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+        {% for product in products %}
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail" >
+                    <h4 class="text-center"><span class="label label-info">{{ product.category }}</span></h4>
+                    <img src="http://placehold.it/650x450&text=Placeholder" class="img-responsive">
+                    <div class="caption">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <h3><a href="{{ path('product_show', {'id' : product.id }) }}">{{ product.name }}</a></h3>
+                            </div>
+                            <div class="col-md-6 col-xs-6 price">
+                                <h3>
+                                    <label>${{ product.price }}</label></h3>
+                            </div>
+                        </div>
+                            <p>See more <a href="{{ path('product_show', {'id': product.id}) }}">here..</a> </p>
+                        <div class="row">
+                            <form method="POST" action="{{ path('productToCart') }}">
+                            <div class="col-md-6">
+                                <input type="text" class="hidden" value="{{ product.id }}" name="product_id" id="product">
+                                <input class="hide" type="text" value="{{ app.request.attributes.get('_route') }}" name="path" id="path">
+                                <button class="btn btn-success btn-product" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span> buy</button>
+                            </div>
+                            </form>
+                        </div>
+
+                        <p> </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

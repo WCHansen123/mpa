@@ -1,0 +1,99 @@
+{% extends'base.html.twig' %}
+{% block pageheader %}
+    <h1 style="color: white;">Products in cart:</h1>
+{% endblock %}
+
+{% block body %}
+    <div class="portlet form">
+        {% if products is not empty %}
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Total</th>
+                        <th> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {% for product in products|sort %}
+                        <td class="col-sm-8 col-md-6">
+                            <div class="media">
+                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="{{ path('product_show', { 'id': product.product.id }) }}">{{ product.product.name }}</a></h4>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                            <p>{{ product.quantity }}</p>
+                            <a href="{{ path('update_quantity', { 'id': product.product.id, 'case': '+' }) }}"><button>+</button></a>
+                            <a href="{{ path('update_quantity', { 'id': product.product.id, 'case': '-' }) }}"><button> - </button></a>
+                        </td>
+
+                        <td class="col-sm-1 col-md-1 text-center"><strong id="price">${{ product.product.price }}</strong></td>
+                        <td id="productXprice" class="col-sm-1 col-md-1 text-center"><strong>${{ product.product.price * product.quantity }}</strong></td>
+                        <td class="col-sm-1 col-md-1">
+{#                            <form action="{{ path('removeFromCart') }}">#}
+                            <button type="submit" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove"></span> Remove
+                                <input type="text" class="hidden" value="{{ product.product.id }}" name="product_id">
+                            </button>
+{#                            </form>#}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Subtotal</h5></td>
+                        <td class="text-right"><h5><strong>${{ subtotal }}</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Estimated shipping</h5></td>
+                        <td class="text-right"><h5><strong>$6.94</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h3>Total</h3></td>
+                        <td class="text-right"><h3><strong>${{subtotal + 6.94}}</strong></h3></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>
+                            <button type="button" class="btn btn-default">
+                                <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                            </button>
+                        </td>
+                        <td>
+                            <a href="{{ path('createOrder', {'order': products}) }}">
+                            <button type="button" class="btn btn-success">
+                                Checkout <span class="glyphicon glyphicon-play"></span>
+                            </button>
+                        </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            {% else %}
+            U heeft nog geen producten aan uw shoppingcart toegevoegd !
+        {% endif %}
+    </div>
+{% endblock %}

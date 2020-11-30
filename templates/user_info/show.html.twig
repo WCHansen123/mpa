@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserInfo{% endblock %}
+{% block pageheader %}
+    <h1 style="color: white;">UserInfo</h1>
+{% endblock %}
+
+{% block body %}
+<div class="portlet form">
+    <div class="row-fluid">
+        <div class="span8">
+            <h3>{{ user_info.fullName  }}</h3>
+            <h6>Email: {{ user_info.user.email }}</h6>
+            <h6>Billing/Delivery: {{ user_info.address }}</h6>
+        </div>
+        <div class="btn-group show-on-hover">
+            <a class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+                Action
+                <span class="icon-cog icon-white"></span><span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ path('user_info_edit', {'id': user_info.id}) }}">edit</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
